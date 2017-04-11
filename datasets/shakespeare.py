@@ -47,16 +47,17 @@ class Shakespeare(object):
         vocab_int_map = {vocab: index for index, vocab in enumerate(vocabs_set)}
 
         data_flatten = np.array([vocab_int_map[v] for v in vocabs])
-        data = np.array([data_flatten[i: i+self.n_steps+1] for i in range(data_flatten.shape[0] // (self.n_steps + 1))])
+        #step=3
+        data = np.array([data_flatten[i: i+self.n_steps+1] for i in range(0,data_flatten.shape[0]-self.n_steps -1,3)])
         # let's shuffle data to see anything happens
         np.random.shuffle(data)
         return len(vocabs_set), vocab_int_map, data
 
     def next_batch(self):
-        next_batch = self.data[self.batch_index: self.batch_index + self.batch_size]
+        next_batch = self.data[self.batch_index*self.batch_size: self.batch_index*self.batch_size + self.batch_size]
         self.batch_index += 1
-        if self.batch_index == self.n_chunks:
-            self.batch_index = 0
+        #if self.batch_index == self.n_chunks:
+         #   self.batch_index = 0
 
         batch_x = next_batch[:, 0: self.n_steps]
         batch_y = next_batch[:, -1]
