@@ -79,6 +79,7 @@ def running(is_train=True):
             epoch = 0
             try:
                 for epoch in range(start_epoch, FLAGS.epochs):
+                    shakespeare.batch_index=0
                     for batch in range(shakespeare.n_chunks):
                         batch_x, batch_y = shakespeare.next_batch()
                         loss, _ = sess.run([model.loss, model.train_op],
